@@ -1,0 +1,16 @@
+{
+  "TITLE": "Dashboard Meteo",
+  "CITY_PLACEHOLDER": "Città (es. Roma)",
+  "COUNTRY_PLACEHOLDER": "Paese (ISO-2, opzionale)",
+  "SEARCH": "Cerca",
+  "LOADING": "Caricamento…",
+  "TODAY": "Oggi — {{city}}, {{country}}",
+  "NEXT_DAYS": "Prossimi giorni — {{city}}, {{country}}",
+  "FEELS_LIKE": "Percepita: {{value}}°C",
+  "HUMIDITY": "Umidità: {{value}}%",
+  "WIND": "Vento: {{value}} km/h",
+  "SUNRISE": "Alba: {{value}}",
+  "SUNSET": "Tramonto: {{value}}",
+  "POP": "Probabilità: {{value}}%",
+  "ERROR": "Città non trovata o errore API."
+}

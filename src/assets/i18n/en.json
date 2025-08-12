@@ -1,0 +1,16 @@
+{
+  "TITLE": "Weather Dashboard",
+  "CITY_PLACEHOLDER": "City (e.g., London)",
+  "COUNTRY_PLACEHOLDER": "Country (ISO-2, optional)",
+  "SEARCH": "Search",
+  "LOADING": "Loading…",
+  "TODAY": "Today — {{city}}, {{country}}",
+  "NEXT_DAYS": "Next days — {{city}}, {{country}}",
+  "FEELS_LIKE": "Feels: {{value}}°C",
+  "HUMIDITY": "Humidity: {{value}}%",
+  "WIND": "Wind: {{value}} km/h",
+  "SUNRISE": "Sunrise: {{value}}",
+  "SUNSET": "Sunset: {{value}}",
+  "POP": "POP: {{value}}%",
+  "ERROR": "City not found or API error."
+}

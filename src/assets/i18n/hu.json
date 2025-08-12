@@ -1,0 +1,16 @@
+{
+  "TITLE": "Időjárás áttekintés",
+  "CITY_PLACEHOLDER": "Város (pl. Budapest)",
+  "COUNTRY_PLACEHOLDER": "Ország (ISO-2, opcionális)",
+  "SEARCH": "Keresés",
+  "LOADING": "Betöltés…",
+  "TODAY": "Ma — {{city}}, {{country}}",
+  "NEXT_DAYS": "Következő napok — {{city}}, {{country}}",
+  "FEELS_LIKE": "Hőérzet: {{value}}°C",
+  "HUMIDITY": "Páratartalom: {{value}}%",
+  "WIND": "Szél: {{value}} km/h",
+  "SUNRISE": "Napkelte: {{value}}",
+  "SUNSET": "Napnyugta: {{value}}",
+  "POP": "Eső valószínűsége: {{value}}%",
+  "ERROR": "A város nem található vagy API hiba."
+}

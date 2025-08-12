@@ -1,0 +1,16 @@
+{
+  "TITLE": "Wetterübersicht",
+  "CITY_PLACEHOLDER": "Stadt (z.B. Berlin)",
+  "COUNTRY_PLACEHOLDER": "Land (ISO-2, optional)",
+  "SEARCH": "Suchen",
+  "LOADING": "Lade…",
+  "TODAY": "Heute — {{city}}, {{country}}",
+  "NEXT_DAYS": "Nächste Tage — {{city}}, {{country}}",
+  "FEELS_LIKE": "Gefühlt: {{value}}°C",
+  "HUMIDITY": "Luftfeuchtigkeit: {{value}}%",
+  "WIND": "Wind: {{value}} km/h",
+  "SUNRISE": "Sonnenaufgang: {{value}}",
+  "SUNSET": "Sonnenuntergang: {{value}}",
+  "POP": "Regenwahrscheinlichkeit: {{value}}%",
+  "ERROR": "Stadt nicht gefunden oder API-Fehler."
+}

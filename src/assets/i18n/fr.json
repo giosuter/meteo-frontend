@@ -1,0 +1,16 @@
+{
+  "TITLE": "Tableau météo",
+  "CITY_PLACEHOLDER": "Ville (ex. Paris)",
+  "COUNTRY_PLACEHOLDER": "Pays (ISO-2, optionnel)",
+  "SEARCH": "Rechercher",
+  "LOADING": "Chargement…",
+  "TODAY": "Aujourd'hui — {{city}}, {{country}}",
+  "NEXT_DAYS": "Prochains jours — {{city}}, {{country}}",
+  "FEELS_LIKE": "Ressenti: {{value}}°C",
+  "HUMIDITY": "Humidité: {{value}}%",
+  "WIND": "Vent: {{value}} km/h",
+  "SUNRISE": "Lever du soleil: {{value}}",
+  "SUNSET": "Coucher du soleil: {{value}}",
+  "POP": "Probabilité: {{value}}%",
+  "ERROR": "Ville introuvable ou erreur API."
+}

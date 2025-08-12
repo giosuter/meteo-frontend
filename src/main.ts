@@ -1,9 +1,10 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+// src/main.ts
+import { bootstrapApplication, importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
+import { AppTranslateModule } from './app/app.translate.module';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient() // <-- enables HttpClient across the app
+    importProvidersFrom(AppTranslateModule),
   ],
 }).catch(err => console.error(err));

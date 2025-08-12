@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.css */
+:root {
+  --bg: #f6f7fb;
+  --text: #222;
+}
+
+/* Global font + colors */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}

@@ -1,0 +1,190 @@
+:root {
+  --bg: #f6f7fb;
+  --text: #222;
+  --muted: #666;
+  --card: #fff;
+  --primary: #005bbc;
+  --border: #e5e7eb;
+}
+
+* { box-sizing: border-box; }
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ===== Header ===== */
+.header {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.header h1 {
+  flex: 1 0 100%;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+/* Controls */
+.header .controls {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.header .controls input {
+  display: inline-flex;
+  flex: 0 0 170px;
+  min-width: 170px;
+  padding: 8px 10px;
+  background: #fff;
+  color: #000;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  margin: 4px 0; /* margin for better separation */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.header .controls input::placeholder { color: #666; }
+.header .controls input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(0, 91, 188, 0.5);
+  outline: none;
+}
+
+/* Search button */
+.header .controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 120px;
+  min-height: 38px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 4px 0; /* same margin as input */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: background-color .15s ease, transform .05s ease;
+}
+.header .controls button:hover { background-color: #e68900; }
+.header .controls button:active { transform: translateY(1px); }
+.header .controls button:disabled { opacity: 0.7; cursor: default; }
+
+.header .controls input:focus,
+.header .controls button:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 91, 188, 0.35);
+}
+
+/* ===== Messages ===== */
+.error {
+  background: #ffe8e8;
+  color: #9b2226;
+  border: 1px solid #ffd1d1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+/* ===== Cards ===== */
+.card {
+  background: var(--card);
+  border: 1px solid #c9d7e8;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 20px rgba(0, 33, 76, 0.08);
+}
+
+/* Current weather layout */
+.current {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+.current h2 { margin: 0 0 6px; font-size: 1.1rem; }
+.temp { font-size: 2.4rem; font-weight: 700; margin: 6px 0; }
+.desc { color: var(--muted); margin-bottom: 6px; }
+
+.meta span,
+.sun span {
+  display: inline-block;
+  padding: 4px 8px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  border-radius: 999px;
+  background: #f3f7ff;
+  border: 1px solid #e6eef7;
+  color: #334155;
+  font-size: 0.92rem;
+}
+
+.current .current-right {
+  background: #f7faff;
+  border: 1px solid #e6eef7;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Forecast */
+.forecast h2 { margin: 0 0 10px; font-size: 1.1rem; }
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 12px;
+}
+.day {
+  background: #fff;
+  border: 1px solid #e6eef7;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 33, 76, 0.05);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.day:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 33, 76, 0.08);
+  border-color: #d7e6f6;
+}
+.date { font-weight: 600; margin-bottom: 6px; }
+.range { display: flex; justify-content: center; gap: 8px; margin: 4px 0; }
+.max { font-weight: 700; color: #0a66c2; }
+.min { color: #64748b; }
+.pop { color: var(--muted); font-size: 0.9rem; }
+
+/* Icon sizes */
+.wx-icon { width: 100px; height: 100px; }
+.wx-icon.small { width: 70px; height: 70px; }
+
+/* ===== Responsive ===== */
+@media (max-width: 720px) {
+  .current { grid-template-columns: 1fr; }
+  .forecast-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+  .header .controls input { min-width: 140px; flex: 1 0 140px; }
+}
+
+@media (max-width: 420px) {
+  .header .controls { justify-content: stretch; }
+  .header .controls input { flex: 1 0 100%; min-width: 0; }
+  .header .controls button { flex: 1 0 100%; }
+}

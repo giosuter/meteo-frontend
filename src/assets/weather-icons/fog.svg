@@ -1,0 +1,9 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cloud -->
+  <path d="M46 34H18a12 12 0 1 1 3-23.5A14 14 0 0 1 46 8a10 10 0 0 1 0 20z"
+        fill="#D8E6F8" stroke="#AEC8E8" stroke-width="2" />
+  <!-- Fog lines -->
+  <g fill="none" stroke="#C3D3E9" stroke-width="3" stroke-linecap="round">
+    <path d="M14 44h36"/><path d="M10 50h44"/><path d="M16 56h32"/>
+  </g>
+</svg>

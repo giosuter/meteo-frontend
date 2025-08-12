@@ -1,0 +1,8 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Breeze swirls -->
+  <g fill="none" stroke="#7EB6FF" stroke-width="4" stroke-linecap="round">
+    <path d="M8 24h28a6 6 0 1 0 0-12"/>
+    <path d="M6 34h36a7 7 0 1 1 0 14"/>
+    <path d="M10 48h22a5 5 0 1 0 0-10"/>
+  </g>
+</svg>

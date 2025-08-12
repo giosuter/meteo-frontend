@@ -1,36 +1,40 @@
 <div class="container">
+  <!-- Header -->
   <header class="header">
-    <h1>{{ title }}</h1>
+    <h1>{{ "TITLE" | translate }}</h1>
 
     <div class="controls">
-            <!-- Language Selector -->
-      <select (change)="changeLang($event.target.value)">
-        <option value="en">EN</option>
-        <option value="de">DE</option>
-        <option value="fr">FR</option>
-        <option value="it">IT</option>
-        <option value="hu">HU</option>
+      <!-- Language selector (template-safe cast) -->
+      <select
+        [ngModel]="selectedLang"
+        (ngModelChange)="changeLang($event)"
+      >
+        <option *ngFor="let l of ['en','de','fr','it','hu']" [value]="l">
+          {{ l | uppercase }}
+        </option>
       </select>
 
-      
+      <!-- City -->
       <input
         [(ngModel)]="city"
         (keyup.enter)="refreshAll()"
-        placeholder="City (e.g., Roma)"
+        placeholder="{{ 'CITY_PLACEHOLDER' | translate }}"
         aria-label="City"
       />
 
+      <!-- Country -->
       <input
         [(ngModel)]="country"
         (keyup.enter)="refreshAll()"
         (blur)="country = (country || '').trim().toUpperCase()"
-        placeholder="Country (ISO-2, optional)"
+        placeholder="{{ 'COUNTRY_PLACEHOLDER' | translate }}"
         aria-label="Country code"
         maxlength="2"
       />
 
+      <!-- Search -->
       <button type="button" (click)="refreshAll()" [disabled]="loading()">
-        {{ loading() ? "Loading…" : "Search" }}
+        {{ loading() ? ("LOADING" | translate) : ("SEARCH" | translate) }}
       </button>
     </div>
   </header>
@@ -41,19 +45,36 @@
   <!-- Current (card) -->
   <section class="card current" *ngIf="current as c">
     <div class="current-left">
-      <h2>Today — {{ c.city }}, {{ c.country }}</h2>
+      <h2>{{ "TODAY" | translate : { city: c.city, country: c.country } }}</h2>
+
       <div class="temp">{{ c.temp | number : "1.0-1" }}°C</div>
       <div class="desc">{{ c.description }}</div>
+
       <div class="meta">
-        <span>Feels: {{ c.feelsLike | number : "1.0-1" }}°C</span>
-        <span>Humidity: {{ c.humidity }}%</span>
-        <span>Wind: {{ c.windKph | number : "1.0-0" }} km/h</span>
+        <span>
+          {{
+            "FEELS_LIKE"
+              | translate : { value: (c.feelsLike | number : "1.0-1") }
+          }}
+        </span>
+        <span>
+          {{ "HUMIDITY" | translate : { value: c.humidity } }}
+        </span>
+        <span>
+          {{ "WIND" | translate : { value: (c.windKph | number : "1.0-0") } }}
+        </span>
       </div>
+
       <div class="sun">
-        <span>Sunrise: {{ toLocalTime(c.sunrise) }}</span>
-        <span>Sunset: {{ toLocalTime(c.sunset) }}</span>
+        <span>
+          {{ "SUNRISE" | translate : { value: toLocalTime(c.sunrise) } }}
+        </span>
+        <span>
+          {{ "SUNSET" | translate : { value: toLocalTime(c.sunset) } }}
+        </span>
       </div>
     </div>
+
     <div class="current-right">
       <img
         class="wx-icon"
@@ -67,10 +88,14 @@
 
   <!-- Forecast (card) -->
   <section class="card forecast" *ngIf="forecast as f">
-    <h2>Next days — {{ f.city }}, {{ f.country }}</h2>
+    <h2>
+      {{ "NEXT_DAYS" | translate : { city: f.city, country: f.country } }}
+    </h2>
+
     <div class="forecast-grid">
       <div class="day" *ngFor="let d of f.days">
         <div class="date">{{ d.date | date : "dd.MM.yyyy" }}</div>
+
         <img
           class="wx-icon small"
           [src]="getIconPath(d.icon)"
@@ -78,12 +103,16 @@
           height="60"
           alt="Icon"
         />
+
         <div class="range">
           <span class="max">{{ d.max | number : "1.0-1" }}°</span>
           <span class="min">{{ d.min | number : "1.0-1" }}°</span>
         </div>
+
         <div class="desc">{{ d.description }}</div>
-        <div class="pop">POP: {{ d.pop }}%</div>
+        <div class="pop">
+          {{ "POP" | translate : { value: d.pop } }}
+        </div>
       </div>
     </div>
   </section>

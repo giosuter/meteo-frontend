@@ -33,26 +33,29 @@
   font-size: 1.4rem;
 }
 
-/* Controls */
+/* Controls row */
 .header .controls {
   flex: 1 0 100%;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;       /* vertical alignment */
   justify-content: flex-end;
   gap: 10px;
   min-width: 0;
+  flex-wrap: nowrap;         /* keep single line on wide screens */
 }
 
+/* Inputs — exact height, tidy focus */
 .header .controls input {
   display: inline-flex;
   flex: 0 0 170px;
   min-width: 170px;
-  padding: 8px 10px;
+  height: 36px;              /* match select & button */
+  padding: 0 10px;
   background: #fff;
   color: #000;
   border: 2px solid transparent;
   border-radius: 6px;
-  margin: 4px 0; /* margin for better separation */
+  margin: 0;                 /* avoid vertical misalignment */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -63,15 +66,35 @@
   outline: none;
 }
 
-/* Search button */
+/* Language select — same height + custom arrow */
+.controls select {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 28px 0 10px;    /* room for arrow on the right */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path fill='gray' d='M6 8L0 0h12z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px 8px;
+}
+
+/* Search button — same height */
 .header .controls button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  min-width: 120px;
-  min-height: 38px;
-  padding: 8px 16px;
+  height: 36px;              /* match inputs/select */
+  padding: 0 16px;
   border: none;
   border-radius: 6px;
   background-color: #ff9800;
@@ -79,7 +102,6 @@
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  margin: 4px 0; /* same margin as input */
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: background-color .15s ease, transform .05s ease;
 }
@@ -87,8 +109,10 @@
 .header .controls button:active { transform: translateY(1px); }
 .header .controls button:disabled { opacity: 0.7; cursor: default; }
 
+/* Strong visible focus (keyboard users) */
 .header .controls input:focus,
-.header .controls button:focus {
+.header .controls button:focus,
+.header .controls select:focus {
   outline: 2px solid #fff;
   outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(0, 91, 188, 0.35);
@@ -177,6 +201,12 @@
 .wx-icon.small { width: 70px; height: 70px; }
 
 /* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .header .controls {
+    flex-wrap: wrap;          /* allow wrapping when space is tight */
+  }
+}
+
 @media (max-width: 720px) {
   .current { grid-template-columns: 1fr; }
   .forecast-grid { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
@@ -185,6 +215,7 @@
 
 @media (max-width: 420px) {
   .header .controls { justify-content: stretch; }
-  .header .controls input { flex: 1 0 100%; min-width: 0; }
+  .header .controls input,
+  .header .controls select,
   .header .controls button { flex: 1 0 100%; }
 }

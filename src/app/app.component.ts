@@ -25,8 +25,10 @@ import { mapIcon } from './icon-map';
 export class AppComponent implements OnInit {
   title = 'Meteo';
 
-  city = 'Zurich';
+  city = 'Wohlen';
   country = ''; // ISO-2 optional
+
+  selectedLang = 'de'; // bound to the <select>
 
   loading = signal(false);
   error = signal<string | null>(null);
@@ -34,25 +36,26 @@ export class AppComponent implements OnInit {
   current: CurrentWeatherDto | null = null;
   forecast: ForecastDto | null = null;
 
+  private readonly supported = ['en', 'de', 'fr', 'it', 'hu'] as const;
+
   constructor(
     private weather: WeatherService,
     private translate: TranslateService
   ) {
-    // configure languages
-    translate.addLangs(['en', 'de', 'fr', 'it', 'hu']);
-    translate.setDefaultLang('en');
+    // Configure languages
+    this.translate.addLangs(this.supported as unknown as string[]);
+    this.translate.setDefaultLang('de');
 
-    // pick initial language (from URL ?lang=xx, browser, or default)
+    // Prefer order: URL -> localStorage -> 'de'
     const params = new URLSearchParams(location.search);
-    const langFromUrl = params.get('lang');
-    const initial =
-      langFromUrl && ['en', 'de', 'fr', 'it', 'hu'].includes(langFromUrl)
-        ? langFromUrl
-        : (translate.getBrowserLang() || 'en').substring(0, 2);
+    const fromUrl = params.get('lang');
+    const stored = (typeof localStorage !== 'undefined')
+      ? localStorage.getItem('lang')
+      : null;
 
-    this.translate.use(
-      ['en', 'de', 'fr', 'it', 'hu'].includes(initial) ? initial : 'en'
-    );
+    const initial = this.normalizeLang(fromUrl || stored || 'de');
+    this.selectedLang = initial; // so the selector matches
+    this.translate.use(initial);
   }
 
   ngOnInit(): void {
@@ -67,12 +70,17 @@ export class AppComponent implements OnInit {
 
   // === i18n handler for the <select> ===
   changeLang(lang: string): void {
-    if (['en', 'de', 'fr', 'it', 'hu'].includes(lang)) {
-      this.translate.use(lang);
+    const norm = this.normalizeLang(lang);
+    if (this.supported.includes(norm as any)) {
+      this.selectedLang = norm;
+      this.translate.use(norm);
+
+      // persist choice
+      try { localStorage.setItem('lang', norm); } catch {}
 
       // keep lang in URL alongside city/country
       const params = new URLSearchParams(location.search);
-      params.set('lang', lang);
+      params.set('lang', norm);
       if (this.city?.trim()) params.set('city', this.city.trim());
       if (this.country?.trim())
         params.set('country', this.country.trim().toUpperCase());
@@ -116,9 +124,11 @@ export class AppComponent implements OnInit {
     const qp = new URLSearchParams(location.search);
     qp.set('city', city.trim());
     if (country?.trim()) qp.set('country', country.trim().toUpperCase());
-    // keep current lang in URL too
-    const lang = this.translate.currentLang || 'en';
+
+    // keep current lang in URL too (default to 'de')
+    const lang = this.normalizeLang(this.translate.currentLang || 'de');
     qp.set('lang', lang);
+
     history.replaceState(
       null,
       '',
@@ -138,5 +148,11 @@ export class AppComponent implements OnInit {
           minute: '2-digit',
         })
       : '';
+  }
+
+  /** Normalize anything like "de-CH", "it_IT" -> "de", "it"; fallback to 'de' */
+  private normalizeLang(lang: string): string {
+    const two = (lang || 'de').toLowerCase().slice(0, 2);
+    return this.supported.includes(two as any) ? two : 'de';
   }
 }

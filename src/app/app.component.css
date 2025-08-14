@@ -48,7 +48,7 @@
 .header .controls input {
   display: inline-flex;
   flex: 0 0 170px;
-  min-width: 170px;
+  min-width: 190px;
   height: 36px;              /* match select & button */
   padding: 0 10px;
   background: #fff;
@@ -157,7 +157,8 @@
   margin-bottom: 6px;
   border-radius: 999px;
   background: #f3f7ff;
-  border: 1px solid #e6eef7;
+  background-color: #99abf43f; /* Feels: 25.8°C, Humidity: 76%, etc.*/
+  border: 1px solid #327ace;
   color: #334155;
   font-size: 0.92rem;
 }
@@ -218,4 +219,14 @@
   .header .controls input,
   .header .controls select,
   .header .controls button { flex: 1 0 100%; }
+}
+
+.forecast-details {
+  font-weight: 600;           /* darker text weight */
+  color: #222;                /* darker grey, almost black */
+}
+
+.forecast-details span.label {
+  font-weight: 700;           /* even bolder for labels */
+  color: #111;                /* darkest for labels */
 }

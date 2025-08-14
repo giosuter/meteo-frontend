@@ -48,7 +48,9 @@
       <h2>{{ "TODAY" | translate : { city: c.city, country: c.country } }}</h2>
 
       <div class="temp">{{ c.temp | number : "1.0-1" }}°C</div>
-      <div class="desc">{{ c.description }}</div>
+
+      <!-- Localized description (no regex here) -->
+      <div class="desc">{{ tDesc(c.description) }}</div>
 
       <div class="meta">
         <span>
@@ -109,7 +111,9 @@
           <span class="min">{{ d.min | number : "1.0-1" }}°</span>
         </div>
 
-        <div class="desc">{{ d.description }}</div>
+        <!-- Localized description (no regex here) -->
+        <div class="desc">{{ tDesc(d.description) }}</div>
+
         <div class="pop">
           {{ "POP" | translate : { value: d.pop } }}
         </div>

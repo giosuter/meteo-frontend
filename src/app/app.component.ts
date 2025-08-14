@@ -89,6 +89,9 @@ export class AppComponent implements OnInit {
         '',
         `${location.pathname}?${params.toString()}${location.hash}`
       );
+
+      // refetch with the new language
+      this.refreshAll();
     }
   }
 
@@ -98,12 +101,13 @@ export class AppComponent implements OnInit {
 
     const city = this.city.trim();
     const iso2 = (this.country || '').trim().toUpperCase() || undefined;
+    const lang = this.normalizeLang(this.translate.currentLang || this.selectedLang || 'de');
 
-    this.weather.getCurrent(city, iso2).subscribe({
+    this.weather.getCurrent(city, iso2, lang).subscribe({
       next: (cw) => {
         this.current = cw;
 
-        this.weather.getForecast(city, iso2).subscribe({
+        this.weather.getForecast(city, iso2, lang).subscribe({
           next: (fc) => {
             this.forecast = fc;
             this.loading.set(false);
@@ -154,5 +158,26 @@ export class AppComponent implements OnInit {
   private normalizeLang(lang: string): string {
     const two = (lang || 'de').toLowerCase().slice(0, 2);
     return this.supported.includes(two as any) ? two : 'de';
+  }
+
+  // ===== Description translation helpers (avoid regex in template) =====
+
+  /** Build i18n key like "WX_DESC.clear_sky" from raw description. */
+  private makeDescKey(desc: string | null | undefined): string {
+    const raw = (desc || '').toLowerCase()
+      .normalize('NFD')               // split accents
+      .replace(/[\u0300-\u036f]/g, ''); // remove accents
+    const slug = raw
+      .replace(/[^a-z0-9]+/g, '_')    // non-alnum -> _
+      .replace(/^_+|_+$/g, '');       // trim _
+    return 'WX_DESC.' + slug;
+  }
+
+  /** Translate description via i18n with graceful fallback to original text. */
+  tDesc(desc: string | null | undefined): string {
+    if (!desc) return '';
+    const key = this.makeDescKey(desc);
+    const translated = this.translate.instant(key);
+    return translated === key ? desc : translated;
   }
 }

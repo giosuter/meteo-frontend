@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -37,20 +37,41 @@ export class WeatherService {
 
   constructor(private http: HttpClient) {}
 
-  getCurrent(city: string, country?: string): Observable<CurrentWeatherDto> {
-    let params = new HttpParams().set('city', city);
-    if (country) params = params.set('country', country);
+  /**
+   * Get the current weather. Optionally pass a language code for localization.
+   */
+  getCurrent(city: string, country?: string, lang?: string): Observable<CurrentWeatherDto> {
+    const { params, headers } = this.buildOptions(city, country, lang);
     return this.http
-      .get<CurrentWeatherDto>(`${this.base}/api/weather/current`, { params })
+      .get<CurrentWeatherDto>(`${this.base}/api/weather/current`, { params, headers })
       .pipe(catchError(this.handleHttpError));
   }
 
-  getForecast(city: string, country?: string): Observable<ForecastDto> {
+  /**
+   * Get the forecast. Optionally pass a language code for localization.
+   */
+  getForecast(city: string, country?: string, lang?: string): Observable<ForecastDto> {
+    const { params, headers } = this.buildOptions(city, country, lang);
+    return this.http
+      .get<ForecastDto>(`${this.base}/api/weather/forecast`, { params, headers })
+      .pipe(catchError(this.handleHttpError));
+  }
+
+  /**
+   * Build HttpParams and optional headers for all requests.
+   */
+  private buildOptions(city: string, country?: string, lang?: string): { params: HttpParams; headers?: HttpHeaders } {
     let params = new HttpParams().set('city', city);
     if (country) params = params.set('country', country);
-    return this.http
-      .get<ForecastDto>(`${this.base}/api/weather/forecast`, { params })
-      .pipe(catchError(this.handleHttpError));
+
+    let headers: HttpHeaders | undefined;
+    const normLang = (lang || '').trim().toLowerCase();
+    if (normLang) {
+      params = params.set('lang', normLang);
+      headers = new HttpHeaders({ 'Accept-Language': normLang });
+    }
+
+    return { params, headers };
   }
 
   private handleHttpError(err: HttpErrorResponse) {

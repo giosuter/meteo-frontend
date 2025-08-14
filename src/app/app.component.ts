@@ -2,6 +2,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment  } from '../environments/environment';
 
 import {
   WeatherService,
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit {
     const initial = this.normalizeLang(fromUrl || stored || 'de');
     this.selectedLang = initial; // so the selector matches
     this.translate.use(initial);
+    console.log('API base at runtime:', environment.apiBase);
   }
 
   ngOnInit(): void {
